@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="LayoutPadrao">
+    
+<head>
+	<title>Blog</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<div layout:include="MensagemGeral"></div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="clearfix">
+	   			<h1 class="panel-title aw-titulo-panel">Comentários</h1>
+	   			<a class="btn btn-link aw-link-panel" th:href="@{/blog/novo}">Novo Comentário</a>
+	   		</div>
+	   	</div>
+	   	
+	   	<div class="panel-body">
+	   		<form method="GET" class="form-horizontal" th:action="@{/posts}" th:object="${filtro}">
+	   			<div class="form-group">
+	   				<div class="col-sm-4">
+	   					<div class="input-group">
+	   						<input class="form-control" placeholder="Pesquisar"
+	   							autofocus="autofocus" th:field="*{comentario}"></input>
+	   						<span class="input-group-btn">
+	   							<button type="submit" class="btn btn-default">
+	   								<i class="glyphicon glyphicon-search"></i>
+	   							</button>
+	   						</span>
+	   					</div>
+	   				</div>
+	   			</div>
+	   		</form>
+	   		
+	   		<div class="table-responsive">
+		   		<table class="table table-bordered table-striped">
+		   			<thead>
+		   				<tr>
+		   					<th class="text-center col-md-1">#</th>
+		   					<th class="text-center col-md-2">Nome</th>
+		   					<th class="text-center col-md-2">Email</th>
+		   					<th class="text-center col-md-2">Comentário</th>
+		   				</tr>
+		   			</thead>
+		   			<tbody>
+		   				<tr th:each="post : ${posts}">
+		   					<td class="text-center" th:text="${post.id}">1</td>
+		   					<td th:text="${post.nome}"></td>
+		   					<td class="text-center" th:text="${{post.email}}"></td>
+		   					<td class="text-center" th:text="${{post.comentario}}"></td>
+		   				</tr>
+		   				<tr>
+		   					<td colspan="6" th:if="${#lists.isEmpty(posts)}">Nenhum Comentário foi encontrado</td>
+		   				</tr>
+		   			</tbody>
+		   		</table>
+		   	</div>
+	   	</div>
+	   	
+	   	<div layout:include="DialogoConfirmacaoExclusao"></div>
+	   	
+	</div>
+</section>
+</html>
